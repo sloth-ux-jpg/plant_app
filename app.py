@@ -8,23 +8,25 @@ app = Flask(__name__)
 def init_db():
     conn = sqlite3.connect('plants.db')
     c = conn.cursor()
+
+    # テーブル作成
     c.execute('''
         CREATE TABLE IF NOT EXISTS plants (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             leaf TEXT,
             flower TEXT
         )
     ''')
-    conn.commit()
 
-    # 初期データ
+    # データ削除（重複防止）
     c.execute("DELETE FROM plants")
-    c.executemany("INSERT INTO plants (name, leaf, flower) VALUES (?, ?, ?)", [
-        ("ひまわり", "大きい", "黄色"),
-        ("たんぽぽ", "小さい", "黄色"),
-        ("バラ", "普通", "赤")
-    ])
+
+    # データ追加
+    c.execute("INSERT INTO plants (name, leaf, flower) VALUES ('タンポポ', '丸い', 'あり')")
+    c.execute("INSERT INTO plants (name, leaf, flower) VALUES ('ススキ', '細い', 'なし')")
+    c.execute("INSERT INTO plants (name, leaf, flower) VALUES ('バラ', '丸い', 'あり')")
+
     conn.commit()
     conn.close()
 
