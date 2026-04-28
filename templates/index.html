@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>植物同定アプリ</title>
+</head>
+<body>
+    <h1>植物を特定</h1>
+
+    <form method="post">
+        <p>葉の大きさ:</p>
+        <label><input type="radio" name="leaf" value="大きい">大きい</label>
+        <label><input type="radio" name="leaf" value="普通">普通</label>
+        <label><input type="radio" name="leaf" value="小さい">小さい</label>
+
+        <p>花の色:</p>
+        <label><input type="radio" name="flower" value="黄色">黄色</label>
+        <label><input type="radio" name="flower" value="赤">赤</label>
+
+        <br><br>
+        <button type="submit">検索</button>
+    </form>
+
+    {% if result %}
+        <h2>結果</h2>
+        <ul>
+        {% for r in result %}
+            <li>{{ r[0] }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
